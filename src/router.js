@@ -5,6 +5,7 @@ import Countdown from '@/views/Countdown'
 Vue.use(Router)
 
 export default new Router({
+  base: '/countdown',
   routes: [
     {
       path: '/',

@@ -5,12 +5,23 @@
         <v-list-item>
           <v-list-item-content>
             <v-list-item-title class="title">
-              Application
+              BryantHinton.com
             </v-list-item-title>
             <v-list-item-subtitle>
-              subtext
+              Countdown
             </v-list-item-subtitle>
           </v-list-item-content>
+        </v-list-item>
+        <v-divider></v-divider>
+      </v-list>
+      <v-list dense nav>
+        <v-list-item v-for="item in items" :key="item.title" :href="item.route">
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -34,7 +45,16 @@ export default {
   name: 'AppHeader',
   data() {
     return {
-      drawer: false
+      drawer: false,
+      items: [
+        { title: 'Home', icon: 'mdi-view-dashboard', route: '/' },
+        { title: 'Astronomy', icon: 'mdi-weather-sunset', route: '/astronomy' },
+        { title: 'Countdown', icon: 'mdi-alarm', route: '/countdown' },
+        { title: 'Photos', icon: 'mdi-image', route: '/photography' },
+        { title: 'Portfolio', icon: 'mdi-folder-multiple', route: '/portfolio' },
+        { title: 'Weather', icon: 'mdi-weather-cloudy', route: '/weather' },
+        { title: 'XKCD', icon: 'mdi-thought-bubble', route: '/xkcd' }
+      ]
     }
   },
   computed: {

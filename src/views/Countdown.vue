@@ -10,23 +10,25 @@
         </p>
       </div>
       <v-container>
-        <v-row>
-          <v-col cols="4">
-            <v-card class='pa-0 ma-0 pb-5' width="85%" color="indigo">
+        <v-row justify="center" align="center">
+          <v-col xl="3" lg="4" md="5" sm="8" xs="12">
+            <v-card class='pa-0 ma-0 pb-5' width="350" color="indigo">
               <v-card-text>
                 <v-date-picker v-on:change="makeAnotherDay" v-model="dateSelector" color="indigo" class="elevation-0"></v-date-picker>
               </v-card-text>
               <v-btn v-on:click="makeToday" color="white">Set to Now</v-btn>
             </v-card>
           </v-col>
-          <v-col cols="1">
+          <v-col lg="1" md="3" sm="2" xs="12">
+            <v-divider vertical class="left">
+            </v-divider>
             <v-btn v-on:click="addItem" color="amber" fab dark large>
               <v-icon large>mdi-plus</v-icon>
             </v-btn>
-          </v-col>
-          <v-col>
-            <v-divider vertical>
+            <v-divider vertical class="right">
             </v-divider>
+          </v-col>
+          <v-col xl="4" lg="6" md="8" xs="12">
             <div v-for="item in items" :key="item.id" class="mt-5">
               <div>
                   <v-btn color="indigo" dark v-on:click="getItem(item.id)" class="mr-5">{{item.since}}</v-btn>
@@ -82,12 +84,12 @@ export default {
   methods: {
     makeToday: function(event) {
       this.from = Math.trunc((new Date()).getTime() / 1000)
-      this.since = moment(new Date()).format('MMMM d, YYYY, h:mm:ss a')
+      this.since = moment(new Date()).format('MMMM Do, YYYY, h:mm:ss A')
       this.dateSelector = moment(new Date()).format('YYYY-MM-DD')
     },
     makeAnotherDay: function(event) {
       this.from = Math.trunc((new Date(this.dateSelector)).getTime() / 1000)
-      this.since = moment(new Date(this.dateSelector).getTime() + 60000 * 60 * 7).format('MMMM d, YYYY, h:mm:ss a')
+      this.since = moment(this.dateSelector).format('MMMM Do, YYYY, h:mm:ss A')
     },
     getItem: function(id) {
       axios.get(`/api/users/${this.user.id}/items/${id}`).then(response => {
@@ -142,7 +144,4 @@ p {
     padding: 35px;
 }
 
-.v-divider {
-  float: left;
-}
 </style>

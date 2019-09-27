@@ -3,7 +3,7 @@
     <div class="flex-grow-1"></div>
     <div>&copy; {{year}} JK, not really</div>
     <div class="flex-grow-1"></div>
-    <a href="https://github.com/bryantmh/Website/tree/master/countdown">
+    <a href="https://github.com/bryantmh/Countdown">
       <v-icon large>mdi-git</v-icon>
     </a>
   </v-footer>
