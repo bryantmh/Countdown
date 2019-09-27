@@ -1,40 +1,45 @@
 <template>
-  <div id="countdown" align="center">
-    <h1>Amount of time since {{since}}</h1><br>
+  <div id="countdown" align="center" class="mt-8">
+    <h1 class="display-1">Amount of time since {{since}}</h1><br>
       <div id="counter">
-        <p>
+        <p class="headline">
           <b>{{days}}</b> Days<br>
           <b>{{hours}}</b> Hours<br>
           <b>{{minutes}}</b> Minutes<br>
-          <b>{{seconds}}</b> Seconds<br>
+          <b>{{seconds}}</b> {{seconds === 1 ? "Second" : "Seconds"}}<br>
         </p>
       </div>
       <v-container>
         <v-row justify="center" align="center">
-          <v-col xl="3" lg="4" md="5" sm="8" xs="12">
+          <v-col md="6" sm="12">
             <v-card class='pa-0 ma-0 pb-5' width="350" color="indigo">
               <v-card-text>
                 <v-date-picker v-on:change="makeAnotherDay" v-model="dateSelector" color="indigo" class="elevation-0"></v-date-picker>
               </v-card-text>
-              <v-btn v-on:click="makeToday" color="white">Set to Now</v-btn>
+              <v-btn v-on:click="makeToday" color="white" class="mr-12">Set to Now</v-btn>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-btn v-on:click="addItem" color="amber" fab dark large v-on="on">
+                    <v-icon large>mdi-plus</v-icon>
+                  </v-btn>
+                </template>
+                <span>Add the current date to the server</span>
+              </v-tooltip>
             </v-card>
           </v-col>
-          <v-col lg="1" md="3" sm="2" xs="12">
-            <v-divider vertical class="left">
-            </v-divider>
-            <v-btn v-on:click="addItem" color="amber" fab dark large>
-              <v-icon large>mdi-plus</v-icon>
-            </v-btn>
-            <v-divider vertical class="right">
-            </v-divider>
-          </v-col>
-          <v-col xl="4" lg="6" md="8" xs="12">
-            <div v-for="item in items" :key="item.id" class="mt-5">
-              <div>
-                  <v-btn color="indigo" dark v-on:click="getItem(item.id)" class="mr-5">{{item.since}}</v-btn>
-                  <v-btn color="grey" v-on:click="removeItem(item.id)">Delete</v-btn>
-              </div>
-            </div>
+          <v-col md="6" sm="12">
+            <draggable :list="items" class="list-group">
+              <v-list v-for="item in items" :key="item.id" class="pa-0 maxWidth" elevation="1">
+                <v-list-item link class="pa-3 list-group-item">
+                  <v-list-item-content v-on:click="getItem(item.id)">
+                    {{item.since}}
+                  </v-list-item-content>
+                  <v-btn icon color="grey" x-large dark v-on:click="removeItem(item.id)">
+                    <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                </v-list-item>
+              </v-list>
+            </draggable>
           </v-col>
         </v-row>
       </v-container>
@@ -44,10 +49,13 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import draggable from 'vuedraggable'
 axios.defaults.baseURL = `http://${window.location.hostname}:3001`
 
 export default {
-
+  components: {
+    draggable
+  },
   mounted() {
     window.setInterval(() => {
       this.now = Math.trunc((new Date()).getTime() / 1000)
@@ -136,12 +144,9 @@ export default {
 </script>
 
 <style scoped>
-p {
-    font-size: 1.5em;
-}
 
-#countdown {
-    padding: 35px;
+.maxWidth {
+  max-width: 600px;
 }
 
 </style>
