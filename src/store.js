@@ -69,6 +69,7 @@ export default new Vuex.Store({
           context.commit('setRegisterError', '')
           return
         }
+        console.log(error)
         context.commit('setLoginError', 'Sorry, your request failed. We will look into it.')
       })
     },

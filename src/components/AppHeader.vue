@@ -33,8 +33,8 @@
       </v-toolbar-title>
       <div class="flex-grow-1"></div>
         <v-toolbar-items right>
-          <v-btn text>Link 1</v-btn>
-          <v-btn text>Link 2</v-btn>
+          <v-btn text @click="$router.push('login')" v-if="!loggedIn">Login</v-btn>
+          <v-btn text @click="logout" v-else="">{{user.username}} - Logout</v-btn>
         </v-toolbar-items>
     </v-app-bar>
   </div>
@@ -63,23 +63,13 @@ export default {
     },
     loggedIn: function() {
       return this.$store.getters.loggedIn
-    },
-    loginError: function() {
-      return this.$store.getters.loginError
     }
   },
   methods: {
-    login: function() {
-      this.$store.dispatch('login', {
-        email: this.email,
-        password: this.password
-      }).then(user => {
-        this.email = ''
-        this.password = ''
-      })
-    },
-    logout: function() {
-      this.$store.dispatch('logout')
+    logout() {
+      this.$store.commit('setUser', {})
+      this.$store.commit('setLogin', false)
+      this.$router.push('login')
     }
   }
 }

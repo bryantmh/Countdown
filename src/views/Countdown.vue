@@ -60,6 +60,9 @@ export default {
     window.setInterval(() => {
       this.now = Math.trunc((new Date()).getTime() / 1000)
     }, 1000)
+    if (this.$store.getters.user.length === 0) {
+      this.$router.push('/login')
+    }
     this.getItems()
   },
   data() {
@@ -68,25 +71,24 @@ export default {
       since: 'January 1st, 1970, 12:00:00 AM',
       from: 0,
       dateSelector: '1970-01-01',
-      items: [],
-      user: { id: 1 } // this.$store.getters.user
+      items: []
     }
   },
   computed: {
     seconds() {
       return (this.now - this.from) % 60
     },
-
     minutes() {
       return Math.trunc((this.now - this.from) / 60) % 60
     },
-
     hours() {
       return Math.trunc((this.now - this.from) / 60 / 60) % 24
     },
-
     days() {
       return Math.trunc((this.now - this.from) / 60 / 60 / 24)
+    },
+    user() {
+      return this.$store.getters.user
     }
   },
   methods: {
@@ -138,6 +140,11 @@ export default {
       }).catch(err => {
         console.log(`Error: ${err}`)
       })
+    }
+  },
+  watch: {
+    'user.id'() {
+      this.getItems()
     }
   }
 }

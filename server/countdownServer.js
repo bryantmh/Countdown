@@ -73,7 +73,7 @@ app.post('/api/login', (req, res) => {
     }
     return [bcrypt.compare(req.body.password, user.hash), user]
   }).spread((result, user) => {
-    if (result) { res.status(200).json({ user: { username: user.username, name: user.name, id: user.id } }) } else { res.status(403).send('Invalid credentials') }
+    if (result) { res.status(200).json({ user: { username: user.username, id: user.id } }) } else { res.status(403).send('Invalid credentials') }
   }).catch(error => {
     if (error.message !== 'abort') {
       console.log(error)
@@ -83,7 +83,7 @@ app.post('/api/login', (req, res) => {
 })
 
 app.post('/api/users', (req, res) => {
-  if (!req.body.email || !req.body.password || !req.body.username || !req.body.name) {
+  if (!req.body.email || !req.body.password || !req.body.username) {
     return res.status(400).send()
   }
   knex('users').where('email', req.body.email).first().then(user => {
@@ -102,10 +102,9 @@ app.post('/api/users', (req, res) => {
     return knex('users').insert({ email: req.body.email,
       hash: hash,
       username: req.body.username,
-      name: req.body.name,
       role: 'user' })
   }).then(ids => {
-    return knex('users').where('id', ids[0]).first().select('username', 'name', 'id')
+    return knex('users').where('id', ids[0]).first().select('username', 'id')
   }).then(user => {
     res.status(200).json({ user: user })
   }).catch(error => {
