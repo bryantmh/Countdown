@@ -118,7 +118,8 @@ app.post('/api/users', (req, res) => {
 })
 
 https.createServer({
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert')
+  key: fs.readFileSync('server-key.pem'),
+  cert: fs.readFileSync('server-crt.pem'),
+  ca: fs.readFileSync('ca-crt.pem')
 }, app)
   .listen(3001, () => console.log('Server listening on port 3001!'))
