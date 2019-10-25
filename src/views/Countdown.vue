@@ -50,7 +50,7 @@
 import axios from 'axios'
 import moment from 'moment'
 import draggable from 'vuedraggable'
-axios.defaults.baseURL = `http://${window.location.hostname}:3001`
+axios.defaults.baseURL = `https://${window.location.hostname}:3001`
 
 export default {
   components: {

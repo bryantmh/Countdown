@@ -5,7 +5,7 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
-axios.defaults.baseURL = `http://${window.location.hostname}:3001`
+axios.defaults.baseURL = `https://${window.location.hostname}:3001`
 
 export default new Vuex.Store({
   state: {
