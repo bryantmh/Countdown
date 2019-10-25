@@ -118,7 +118,7 @@ app.post('/api/users', (req, res) => {
 })
 
 https.createServer({
-  key: fs.readFileSync('/etc/ssl/private/ssl-cert-snakeoil.key'),
-  cert: fs.readFileSync('/etc/ssl/certs/ssl-cert-snakeoil.pem')
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
 }, app)
   .listen(3001, () => console.log('Server listening on port 3001!'))
