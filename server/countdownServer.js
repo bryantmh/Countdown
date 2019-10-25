@@ -1,6 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const fs = require('fs')
+const https = require('https')
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -115,4 +117,8 @@ app.post('/api/users', (req, res) => {
   })
 })
 
-app.listen(3001, () => console.log('Server listening on port 3001!'))
+https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
+}, app)
+  .listen(3000, () => console.log('Server listening on port 3001!'))
