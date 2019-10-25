@@ -60,7 +60,7 @@ export default {
     window.setInterval(() => {
       this.now = Math.trunc((new Date()).getTime() / 1000)
     }, 1000)
-    if (this.$store.getters.user.length === 0) {
+    if (Object.entries(this.$store.getters.user).length === 0) {
       this.$router.push('/login')
     }
     this.getItems()
