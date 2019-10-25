@@ -118,7 +118,7 @@ app.post('/api/users', (req, res) => {
 })
 
 https.createServer({
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert')
+  key: fs.readFileSync('/etc/letsencrypt/live/bryanthinton.com/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/bryanthinton.com/cert.pem')
 }, app)
   .listen(3001, () => console.log('Server listening on port 3001!'))
