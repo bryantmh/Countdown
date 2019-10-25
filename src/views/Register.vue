@@ -17,7 +17,7 @@
               </v-card-text>
               <v-card-actions>
                 <div class="flex-grow-1"></div>
-                <v-btn @click="register" color="indigo" dark>Register</v-btn>
+                <v-btn @click="tryRegister" color="indigo" dark>Register</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   data() {
     return {
@@ -53,14 +55,13 @@ export default {
     }
   },
   computed: {
-    registerError: function() {
-      return this.$store.getters.registerError
-    }
+    ...mapGetters(['registerError'])
   },
   methods: {
-    register: function() {
+    ...mapActions(['register']),
+    async tryRegister() {
       if (this.$refs.form.validate()) {
-        this.$store.dispatch('register', {
+        await this.register({
           username: this.username,
           email: this.email,
           password: this.password

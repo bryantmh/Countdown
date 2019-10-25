@@ -16,7 +16,7 @@
               <v-card-actions>
                 <v-btn @click="$router.push('/register')" color="amber" dark>Don't Have an Account?</v-btn>
                 <div class="flex-grow-1"></div>
-                <v-btn @click="login" color="indigo" dark>Login</v-btn>
+                <v-btn @click="tryLogin" color="indigo" dark>Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   data() {
     return {
@@ -48,9 +50,10 @@ export default {
     }
   },
   methods: {
-    login() {
+    ...mapActions(['login', 'logout']),
+    async tryLogin() {
       if (this.$refs.form.validate()) {
-        this.$store.dispatch('login', {
+        await this.login({
           email: this.email,
           password: this.password
         }).then(
@@ -60,13 +63,18 @@ export default {
         )
       }
     },
-    logout() {
-      this.$store.dispatch('logout')
+    async logout() {
+      await this.logout()
     }
   },
   computed: {
-    loginError: function() {
-      return this.$store.getters.loginError
+    ...mapGetters(['loginError', 'user'])
+  },
+  watch: {
+    'user.username'(newVal) {
+      if (Object.entries(newVal).length !== 0) {
+        this.$router.push('/')
+      }
     }
   }
 }

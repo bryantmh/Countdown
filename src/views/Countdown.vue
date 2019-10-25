@@ -50,6 +50,7 @@
 import axios from 'axios'
 import moment from 'moment'
 import draggable from 'vuedraggable'
+import { mapGetters } from 'vuex'
 axios.defaults.baseURL = `https://${window.location.hostname}:3001`
 
 export default {
@@ -60,7 +61,7 @@ export default {
     window.setInterval(() => {
       this.now = Math.trunc((new Date()).getTime() / 1000)
     }, 1000)
-    if (Object.entries(this.$store.getters.user).length === 0) {
+    if (Object.entries(this.user).length === 0) {
       this.$router.push('/login')
     }
     this.getItems()
@@ -75,6 +76,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['user']),
     seconds() {
       return (this.now - this.from) % 60
     },
@@ -86,9 +88,6 @@ export default {
     },
     days() {
       return Math.trunc((this.now - this.from) / 60 / 60 / 24)
-    },
-    user() {
-      return this.$store.getters.user
     }
   },
   methods: {
