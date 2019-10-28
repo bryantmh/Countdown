@@ -14,24 +14,24 @@ export default {
     }
   },
   Mutation: {
-    createTime: (parent, data, { db }, info) =>
-      db.time.create(data),
-    deleteTime: (parent, { id }, { db }, info) =>
-      db.time.destroy({
+    createTime: (parent, data, { models }, info) =>
+      models.time.create(data),
+    deleteTime: (parent, { id }, { models }, info) =>
+      models.time.destroy({
         where: {
           id: id
         }
       }),
-    createUser: (parent, data, { db }, info) =>
-      db.user.create(data),
-    deleteUser: (parent, { id }, { db }, info) =>
-      db.user.destroy({
+    createUser: (parent, data, { models }, info) =>
+      models.user.create(data),
+    deleteUser: (parent, { id }, { models }, info) =>
+      models.user.destroy({
         where: {
           id: id
         }
       }),
-    updateUser: (parent, data, { db }, info) =>
-      db.user.update(data)
+    updateUser: (parent, data, { models }, info) =>
+      models.user.update(data)
   },
   Time: {
     user(time) {
