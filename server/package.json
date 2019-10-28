@@ -4,6 +4,7 @@
   "description": "",
   "main": "countdownServer.js",
   "dependencies": {
+    "apollo-server": "^2.9.7",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -11,11 +12,18 @@
     "fs": "0.0.1-security",
     "https": "^1.0.0",
     "knex": "^0.19.4",
+    "sequelize": "^5.21.1",
     "sqlite3": "^4.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel schema.js server.js resolvers.js -d dist",
+    "buildModels": "babel models/* -d dist/models",
+    "start": "npm run build && npm run buildModels && node dist/server.js"
   },
   "author": "",
   "license": "ISC"
